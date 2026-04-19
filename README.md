@@ -87,7 +87,6 @@ O sistema trabalha com dados estruturados, como:
 
 - Configurações de companhias
 - Pedidos pendentes
-- Resultados de logística
 
 Esses dados podem ser fornecidos por diferentes fontes.
 
