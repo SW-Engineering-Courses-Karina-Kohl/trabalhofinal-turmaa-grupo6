@@ -20,7 +20,7 @@ A modelagem foi estruturada para refletir diretamente o contexto da aplicação 
 
 ### Diagrama de Classes
 
-![Diagrama UML](docs/uml.png)
+![Diagrama UML](docs/UML.png)
 
 ### Pedido
 Representa a unidade de entrada do sistema.
