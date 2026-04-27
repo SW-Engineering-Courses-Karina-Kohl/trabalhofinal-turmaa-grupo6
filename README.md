@@ -22,14 +22,14 @@ A modelagem foi estruturada para refletir diretamente o contexto da aplicação 
 
 ![Diagrama UML](docs/UML.png)
 
-### Pedido
+### Order
 Representa a unidade de entrada do sistema.
 
 **Responsabilidades:**
 - Armazenar dados relevantes (distância, peso, tipo de serviço, etc.)
 - Servir como base para o cálculo de frete
 
-### Companhia de Frete
+### Freight Company
 Representa uma estratégia de cálculo aplicada aos pedidos.
 
 **Responsabilidades:**
@@ -40,7 +40,7 @@ Representa uma estratégia de cálculo aplicada aos pedidos.
   - Prazo de entrega
   - Restrições operacionais
 
-### Frete
+### Freight
 Representa o resultado do processamento.
 
 **Responsabilidades:**
@@ -73,9 +73,27 @@ O projeto segue o padrão **MVC (Model-View-Controller)**, conforme definido na 
 ## Estrutura do Projeto
 
 ```
-src/
- ├── controller/
- │    └── 
+src/main/java/br/edu/ufrgs
+ ├── model
+ │    ├── Order
+ │    ├── Freight
+ │    └── FreightCompany
+ │
+ ├── service
+ │    └── FreightProcessor
+ │
+ ├── provider
+ │    ├── OrderProvider
+ │    └── CompanyProvider
+ │
+ ├── exporter
+ │    └── FreightExporter
+ │
+ ├── controller
+ │    └── (Servlets)
+ │
+ └── webapp
+      └── webview
 ```
 
 ## Abstração de Dados
@@ -114,4 +132,4 @@ Esses dados podem ser fornecidos por diferentes fontes.
 
 ## Autoria
 
-preencher
+João Victor Prado Trindade, 588129 ; Jorge Antônio Noll, 343372 ; Arthur Farias Zapata, 577298 ; Pedro Henrique Antunes Claudino, 579557.
