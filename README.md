@@ -84,6 +84,7 @@ O sistema utiliza interfaces para desacoplar a origem dos dados do processamento
 
 - `OrderProvider`: fornece pedidos ao sistema
 - `CompanyProvider`: fornece a companhia configurada
+- `FreightProvider`: fornece a lista de fretes ordenada
 
 Essa abordagem permite flexibilidade na origem dos dados, como arquivos CSV, APIs ou outras fontes externas.
 
