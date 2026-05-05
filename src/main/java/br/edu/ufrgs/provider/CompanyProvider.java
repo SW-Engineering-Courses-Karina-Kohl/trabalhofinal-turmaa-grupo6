@@ -1,4 +1,4 @@
-package br.edu.ufrgs.model;
+package br.edu.ufrgs.provider;
 
 public interface CompanyProvider {
     FreightCompany getCompany();
