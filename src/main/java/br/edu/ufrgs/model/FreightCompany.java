@@ -1,4 +1,4 @@
-package br.edu.ufrgs.provider;
+package br.edu.ufrgs.model;
 
 public class FreightCompany {
     private Double distance_factor;
