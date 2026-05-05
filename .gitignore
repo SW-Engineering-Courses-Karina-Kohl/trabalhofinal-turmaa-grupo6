@@ -1,0 +1,19 @@
+# Compilados
+*.class
+
+# Build
+bin/
+build/
+target/
+out/
+
+# Arquivos gerados
+*.war
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
