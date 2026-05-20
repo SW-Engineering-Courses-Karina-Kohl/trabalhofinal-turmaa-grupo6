@@ -1,5 +1,7 @@
 package br.edu.ufrgs.model;
 
+import java.util.Date;
+
 public class FreightCompany {
     private Double distance_factor;
     private Double weight_factor;
@@ -13,6 +15,26 @@ public class FreightCompany {
         this.base_day_time = base_day_time;
     }
 
+    public Freight calculateFreight(Order Order) {
+        return null;
+    }
+    
+    public Double calculatePrice(Order order) {
+        return 0.0;
+    }
+
+    private Integer calculateDeliveryTime(Order order) {
+        return 0;
+    }
+
+    private Date calculateDeliveryDate(Order order, Integer deliveryTime) {
+        return null;
+    }
+
+    private Priority calculatePriority(Integer deliveryTime) {
+        return null;
+    }
+    
     public Double getDistance_factor() {
         return distance_factor;
     }
