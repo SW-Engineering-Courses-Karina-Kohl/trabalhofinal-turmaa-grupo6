@@ -1,53 +1,55 @@
 package br.edu.ufrgs.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class FreightCompany {
-    private Double distance_factor;
-    private Double weight_factor;
-    private Double express_factor;
-    private Integer base_day_time;
+    private final int DAILY_DISTANCE_CAPACITY = 200;
+    private Double distanceFactor;
+    private Double weightFactor;
+    private Double expressFactor;
+    private Integer baseDayTime;
 
-    public FreightCompany(Double distance_factor, Double weight_factor, Double express_factor, Integer base_day_time) {
-        this.distance_factor = distance_factor;
-        this.weight_factor = weight_factor;
-        this.express_factor = express_factor;
-        this.base_day_time = base_day_time;
+    public FreightCompany(Double distanceFactor, Double weightFactor, Double expressFactor, int baseDayTime) {
+        this.distanceFactor = distanceFactor;
+        this.weightFactor = weightFactor;
+        this.expressFactor = expressFactor;
+        this.baseDayTime = baseDayTime;
     }
 
-    public Freight calculateFreight(Order Order) {
+    public Freight calculateFreight(Order order) {
         return null;
     }
     
-    public Double calculatePrice(Order order) {
+    private Double calculatePrice(Order order) {
         return 0.0;
     }
 
-    private Integer calculateDeliveryTime(Order order) {
-        return 0;
+    private int calculateDeliveryTime(Order order) {
+        Double deliveryTime = baseDayTime + order.getDistance()/DAILY_DISTANCE_CAPACITY;
+        return (int) Math.ceil(deliveryTime);
     }
 
-    private Date calculateDeliveryDate(Order order, Integer deliveryTime) {
-        return null;
+    private LocalDate calculateDeliveryDate(Order order, int deliveryTime) {
+        return order.getServiceDate().plusDays(deliveryTime);
     }
 
-    private Priority calculatePriority(Integer deliveryTime) {
+    private Priority calculatePriority(int deliveryTime) {
         return null;
     }
     
-    public Double getDistance_factor() {
-        return distance_factor;
+    public Double getDistanceFactor() {
+        return distanceFactor;
     }
 
-    public Double getWeight_factor() {
-        return weight_factor;
+    public Double getWeightFactor() {
+        return weightFactor;
     }
 
-    public Double getExpress_factor() {
-        return express_factor;
+    public Double getExpressFactor() {
+        return expressFactor;
     }
 
-    public Integer getBase_day_time() {
-        return base_day_time;
+    public Integer getBaseDayTime() {
+        return baseDayTime;
     }
 }

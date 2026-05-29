@@ -1,4 +1,5 @@
 package br.edu.ufrgs.model;
+
 import java.time.LocalDate;
 
 public class Freight {
