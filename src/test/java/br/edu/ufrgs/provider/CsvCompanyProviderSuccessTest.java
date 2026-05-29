@@ -35,10 +35,10 @@ class CsvCompanyProviderSuccessTest {
         FreightCompany company = provider.getCompany();
 
         assertNotNull(company);
-        assertEquals(data.expectedDistance, company.getDistance_factor());
-        assertEquals(data.expectedWeight, company.getWeight_factor());
-        assertEquals(data.expectedExpress, company.getExpress_factor());
-        assertEquals(data.expectedDays, company.getBase_day_time());
+        assertEquals(data.expectedDistance, company.getDistanceFactor());
+        assertEquals(data.expectedWeight, company.getWeightFactor());
+        assertEquals(data.expectedExpress, company.getExpressFactor());
+        assertEquals(data.expectedDays, company.getBaseDayTime());
     }
 
     static class StreamData {
