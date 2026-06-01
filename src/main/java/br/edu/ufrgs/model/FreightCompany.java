@@ -17,7 +17,14 @@ public class FreightCompany {
     }
 
     public Freight calculateFreight(Order order) {
-        return null;
+        int deliveryTime = calculateDeliveryTime(order);
+
+        return new Freight(
+            order.getOrderId(),
+            calculatePrice(order),
+            calculateDeliveryDate(order, deliveryTime),
+            calculatePriority(deliveryTime)
+        );
     }
     
     private Double calculatePrice(Order order) {
@@ -34,7 +41,15 @@ public class FreightCompany {
     }
 
     private Priority calculatePriority(int deliveryTime) {
-        return null;
+        if(deliveryTime <= 2) {
+            return Priority.URGENT;
+        }
+
+        if(deliveryTime <= 7) {
+            return Priority.NORMAL;
+        }
+
+        return Priority.LONG_DISTANCE;
     }
     
     public Double getDistanceFactor() {
