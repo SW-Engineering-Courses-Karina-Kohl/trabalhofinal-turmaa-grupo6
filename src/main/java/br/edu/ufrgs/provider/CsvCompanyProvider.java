@@ -64,7 +64,7 @@ public class CsvCompanyProvider implements CompanyProvider {
             return new FreightCompany(distanceFactor, weightFactor, expressFactor, baseDayTime);
 
         } catch(Exception e){
-            System.err.println("Erro crítico: O arquivo de configuração da transportadora está com defeito.");
+            System.err.println("O arquivo de configuração da transportadora não está no formato esperado.");
             return null;
         }
     }
