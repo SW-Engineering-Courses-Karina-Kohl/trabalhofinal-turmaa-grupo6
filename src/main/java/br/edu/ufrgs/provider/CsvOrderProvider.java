@@ -14,8 +14,6 @@ import java.util.Set;
 
 public class CsvOrderProvider implements OrderProvider {
 
-    private static final int ANO_MIN = 2026;
-    private static final int ANO_MAX = 2126;
     private static final int REQUIRED_PARAMETERS = 6;
     private static final String ORDER_PREFIX = "ORD-";
 
@@ -245,12 +243,6 @@ public class CsvOrderProvider implements OrderProvider {
     private LocalDate parseDate(LocalDate date) {
 
         if (date == null) {
-            throw new IllegalArgumentException();
-        }
-
-        int year = date.getYear();
-
-        if (year < ANO_MIN || year > ANO_MAX) {
             throw new IllegalArgumentException();
         }
 

@@ -171,32 +171,6 @@ class CsvOrderProviderTest {
         }
 
         @Test
-        void shouldRejectYearBelowMinimum() {
-
-                List<String> csv = List.of(
-                        "pedido_id,cliente,distancia_km,peso_kg,tipo_servico,data_pedido",
-                        "ORD-1,Loja,10.0,2.5,NORMAL,2025-03-23"
-                );
-
-                CsvOrderProvider provider = new CsvOrderProvider(csv);
-
-                assertNull(provider.getOrders());
-        }
-
-        @Test
-        void shouldRejectYearAboveMaximum() {
-
-                List<String> csv = List.of(
-                        "pedido_id,cliente,distancia_km,peso_kg,tipo_servico,data_pedido",
-                        "ORD-1,Loja,10.0,2.5,NORMAL,2127-03-23"
-                );
-
-                CsvOrderProvider provider = new CsvOrderProvider(csv);
-
-                assertNull(provider.getOrders());
-        }
-
-        @Test
         void shouldRejectMissingColumn() {
 
                 List<String> csv = List.of(
@@ -288,38 +262,6 @@ class CsvOrderProviderTest {
                 CsvOrderProvider provider = new CsvOrderProvider(null);
 
                 assertNull(provider.getOrders());
-        }
-
-        @Test
-        void shouldAcceptMinimumYear() {
-
-                List<String> csv = List.of(
-                        "pedido_id,cliente,distancia_km,peso_kg,tipo_servico,data_pedido",
-                        "ORD-1,Loja,10.0,2.5,NORMAL,2026-01-01"
-                );
-
-                CsvOrderProvider provider = new CsvOrderProvider(csv);
-
-                List<Order> orders = provider.getOrders();
-
-                assertNotNull(orders);
-                assertEquals(1, orders.size());
-        }
-
-        @Test
-        void shouldAcceptMaximumYear() {
-
-                List<String> csv = List.of(
-                        "pedido_id,cliente,distancia_km,peso_kg,tipo_servico,data_pedido",
-                        "ORD-1,Loja,10.0,2.5,NORMAL,2126-12-31"
-                );
-
-                CsvOrderProvider provider = new CsvOrderProvider(csv);
-
-                List<Order> orders = provider.getOrders();
-
-                assertNotNull(orders);
-                assertEquals(1, orders.size());
         }
 
         @Test
