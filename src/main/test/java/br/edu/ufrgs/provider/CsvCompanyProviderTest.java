@@ -14,19 +14,23 @@ import br.edu.ufrgs.model.FreightCompany;
 
 class CsvCompanyProviderTest {
 
+    private static final double DOUBLE_DELTA = 0.0001;
+    
     // 1. ERROR SCENARIOS: CORRUPTED / INVALID CSV FILES
     static Stream<List<String>> corruptedCasesProvider() {
         return Stream.of(
             Arrays.asList("parametro,valor", "fator_distancia_km,TEXTO", "fator_peso_kg,2.10", "multiplicador_expresso,1.5", "prazo_base_dias,2"),
             Arrays.asList("parametro,valor", "fator_distancia_km 0.05", "fator_peso_kg 2.10", "multiplicador_expresso 1.5", "prazo_base_dias 2"),
             Arrays.asList("parametro,valor", "coluna_errada,0.05", "fator_peso_kg,2.10", "multiplicador_expresso,1.5", "prazo_base_dias,2"),
-            Arrays.asList("parametro,valor", "fator_distancia_km,-0.05", "fator_peso_kg,2.10", "multiplicador_expresso,1.5", "prazo_base_dias,-5")
+            Arrays.asList("parametro,valor", "fator_distancia_km,-0.05", "fator_peso_kg,2.10", "multiplicador_expresso,1.5", "prazo_base_dias,-5"),
+            Arrays.asList("parametro,valor", "fator_distancia_km,0.05", "fator_distancia_km,-0.10", "fator_peso_kg,2.10", "multiplicador_expresso,1.5", "prazo_base_dias,2"),
+            Arrays.asList("parametro,valor", "fator_distancia_km,0.25", "unknown_parameter,malicious_payload", "fator_peso_kg,3.00", "extra_garbage_line,999", "multiplicador_expresso,1.8", "prazo_base_dias,4")
         );
     }
 
     @ParameterizedTest
     @MethodSource("corruptedCasesProvider")
-    void getCompanyReturnNullWhenCsvHasInvalidData(List<String> lines) {
+    void shouldReturnNullWhenCsvHasInvalidData(List<String> lines) {
         CsvCompanyProvider provider = new CsvCompanyProvider(lines);
         FreightCompany company = provider.getCompany();
         assertNull(company);
@@ -43,7 +47,7 @@ class CsvCompanyProviderTest {
 
     @ParameterizedTest
     @MethodSource("emptyCasesProvider")
-    void getCompanyReturnNullWhenCsvIsEmptyOrMissingProperties(List<String> lines) {
+    void shouldReturnNullWhenCsvIsEmptyOrMissingProperties(List<String> lines) {
         CsvCompanyProvider provider = new CsvCompanyProvider(lines);
         FreightCompany company = provider.getCompany();
         assertNull(company);
@@ -63,20 +67,24 @@ class CsvCompanyProviderTest {
             new StreamData(
                 Arrays.asList("parametro,valor", "fator_distancia_km,0.999", "fator_peso_kg,15.75", "multiplicador_expresso,3.5", "prazo_base_dias,10"),
                 0.999, 15.75, 3.5, 10
+            ),
+            new StreamData(
+                Arrays.asList("parametro,valor", "prazo_base_dias,5", "multiplicador_expresso,2.0", "fator_peso_kg,4.50", "fator_distancia_km,0.12"),
+                0.12, 4.50, 2.0, 5
             )
         );
     }
 
     @ParameterizedTest
     @MethodSource("successCasesProvider")
-    void getCompanyReturnObjectWhenCsvIsValid(StreamData data) {
+    void shouldReturnObjectWhenCsvIsValid(StreamData data) {
         CsvCompanyProvider provider = new CsvCompanyProvider(data.lines);
         FreightCompany company = provider.getCompany();
 
         assertNotNull(company);
-        assertEquals(data.expectedDistance, company.getDistanceFactor());
-        assertEquals(data.expectedWeight, company.getWeightFactor());
-        assertEquals(data.expectedExpress, company.getExpressFactor());
+        assertEquals(data.expectedDistance, company.getDistanceFactor(), DOUBLE_DELTA);
+        assertEquals(data.expectedWeight, company.getWeightFactor(), DOUBLE_DELTA);
+        assertEquals(data.expectedExpress, company.getExpressFactor(), DOUBLE_DELTA);
         assertEquals(data.expectedDays, company.getBaseDayTime());
     }
     
