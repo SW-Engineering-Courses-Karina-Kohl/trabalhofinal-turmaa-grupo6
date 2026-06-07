@@ -1,14 +1,17 @@
 package br.edu.ufrgs.provider;
 
-import br.edu.ufrgs.model.FreightCompany;
-import tech.tablesaw.api.Table;
-import tech.tablesaw.api.Row;
-import tech.tablesaw.io.csv.CsvReadOptions;
 import java.io.StringReader;
 import java.util.List;
 import java.util.Locale;
 
+import br.edu.ufrgs.model.FreightCompany;
+import tech.tablesaw.api.Row;
+import tech.tablesaw.api.Table;
+import tech.tablesaw.io.csv.CsvReadOptions;
+
 public class CsvCompanyProvider implements CompanyProvider {
+
+    private static final int REQUIRED_PARAMETERS = 4;
 
     private List<String> csvLines;
 
@@ -29,7 +32,7 @@ public class CsvCompanyProvider implements CompanyProvider {
             Table data = Table.read().csv(options);
 
 
-            if(data.rowCount() < 4){
+            if(data.rowCount() < REQUIRED_PARAMETERS){
                 return null;
             }
 
@@ -46,15 +49,22 @@ public class CsvCompanyProvider implements CompanyProvider {
                     return null;
                 }
 
-                if(parameter.equals("fator_distancia_km")){
-                    distanceFactor = value;
-                } else if(parameter.equals("fator_peso_kg")){
-                    weightFactor = value;
-                } else if(parameter.equals("multiplicador_expresso")){
-                    expressFactor = value;
-                } else if(parameter.equals("prazo_base_dias")){
-                    baseDayTime = (int) value;
-                }
+                switch (parameter) {
+                    case "fator_distancia_km":
+                        distanceFactor = value;
+                        break;
+                    case "fator_peso_kg":
+                        weightFactor = value;
+                        break;
+                    case "multiplicador_expresso":
+                        expressFactor = value;
+                        break;
+                    case "prazo_base_dias":
+                        baseDayTime = (int) value;
+                        break;
+                    default:
+                    break;
+                }   
             }
 
             if(distanceFactor == null || weightFactor == null || expressFactor == null || baseDayTime == null) {
