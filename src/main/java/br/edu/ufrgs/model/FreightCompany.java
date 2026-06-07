@@ -28,14 +28,7 @@ public class FreightCompany {
     }
     
     private Double calculatePrice(Order order) {
-        Double basePrice = (order.getDistance() * distanceFactor)
-                        + (order.getWeight() * weightFactor);
-
-        if(order.getServiceType().equals("EXPRESSO")) {
-            return basePrice * expressFactor;
-        }
-
-        return basePrice;
+        return 0.0;
     }
 
     private int calculateDeliveryTime(Order order) {
