@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import br.edu.ufrgs.model.Freight;
+import br.edu.ufrgs.model.Order;
 import br.edu.ufrgs.model.FreightCompany;
 import br.edu.ufrgs.provider.CompanyProvider;
 import br.edu.ufrgs.provider.OrderProvider;
