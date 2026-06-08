@@ -74,4 +74,137 @@ class FreightProcessorTest {
 
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    void shouldGenerateFreightsForAllOrders() {
+
+        FreightCompany company =
+            new FreightCompany(
+                0.05,
+                2.10,
+                1.5,
+                2
+            );
+
+        List<Order> orders = List.of(
+            new Order(
+                1,
+                "Cliente A",
+                100.0,
+                10.0,
+                "NORMAL",
+                LocalDate.of(2025, 6, 1)
+            ),
+            new Order(
+                2,
+                "Cliente B",
+                200.0,
+                5.0,
+                "EXPRESSO",
+                LocalDate.of(2025, 6, 1)
+            )
+        );
+
+        CompanyProvider companyProvider =
+            () -> company;
+
+        OrderProvider orderProvider =
+            () -> orders;
+
+        FreightProcessor processor =
+            new FreightProcessor(
+                companyProvider,
+                orderProvider
+            );
+
+        List<Freight> freights =
+            processor.freightProcess();
+
+        assertEquals(2, freights.size());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenThereAreNoOrders() {
+
+        FreightCompany company =
+            new FreightCompany(
+                0.05,
+                2.10,
+                1.5,
+                2
+            );
+
+        CompanyProvider companyProvider =
+            () -> company;
+
+        OrderProvider orderProvider =
+            List::of;
+
+        FreightProcessor processor =
+            new FreightProcessor(
+                companyProvider,
+                orderProvider
+            );
+
+        List<Freight> freights =
+            processor.freightProcess();
+
+        assertTrue(freights.isEmpty());
+    }
+
+    @Test
+    void shouldReturnFreightsSortedByPriority() {
+
+        FreightCompany company =
+            new FreightCompany(
+                1.0,
+                1.0,
+                1.0,
+                1
+            );
+
+        List<Order> orders = List.of(
+            new Order(
+                1,
+                "Cliente",
+                1500.0,
+                10.0,
+                "NORMAL",
+                LocalDate.of(2025, 6, 1)
+            ),
+            new Order(
+                2,
+                "Cliente",
+                100.0,
+                10.0,
+                "NORMAL",
+                LocalDate.of(2025, 6, 1)
+            )
+        );
+
+        CompanyProvider companyProvider =
+            () -> company;
+
+        OrderProvider orderProvider =
+            () -> orders;
+
+        FreightProcessor processor =
+            new FreightProcessor(
+                companyProvider,
+                orderProvider
+            );
+
+        List<Freight> freights =
+            processor.freightProcess();
+
+        assertEquals(
+            Priority.URGENT,
+            freights.get(0).getPriority()
+        );
+
+        assertEquals(
+            Priority.LONG_DISTANCE,
+            freights.get(1).getPriority()
+        );
+    }
 }
