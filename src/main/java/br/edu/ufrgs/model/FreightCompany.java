@@ -3,7 +3,7 @@ package br.edu.ufrgs.model;
 import java.time.LocalDate;
 
 public class FreightCompany {
-    private final int DAILY_DISTANCE_CAPACITY = 200;
+    private static final int DAILY_DISTANCE_CAPACITY = 200;
     private Double distanceFactor;
     private Double weightFactor;
     private Double expressFactor;
