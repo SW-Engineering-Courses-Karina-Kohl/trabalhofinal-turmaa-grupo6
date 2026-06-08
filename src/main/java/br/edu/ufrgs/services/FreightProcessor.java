@@ -1,9 +1,11 @@
 package br.edu.ufrgs.services;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 import br.edu.ufrgs.model.Freight;
+import br.edu.ufrgs.model.FreightCompany;
 import br.edu.ufrgs.provider.CompanyProvider;
 import br.edu.ufrgs.provider.OrderProvider;
 
@@ -17,7 +19,25 @@ public class FreightProcessor {
     }
 
     public List<Freight> freightProcess() {
-        return null;
+
+        FreightCompany company =
+                companyProvider.getCompany();
+
+        List<Order> orders =
+                orderProvider.getOrders();
+
+        List<Freight> freights =
+                new ArrayList<>();
+
+        for (Order order : orders) {
+
+            Freight freight =
+                    company.calculateFreight(order);
+
+            freights.add(freight);
+        }
+
+        return freightSort(freights);
     }
 
     public List<Freight> freightSort(List<Freight> freights) {
