@@ -11,7 +11,7 @@ import tech.tablesaw.io.csv.CsvReadOptions;
 
 public class CsvCompanyProvider implements CompanyProvider {
 
-    private static final int REQUIRED_PARAMETERS = 4;
+    private static final int REQUIRED_PARAMETERS = 5;
 
     private List<String> csvLines;
 
@@ -40,6 +40,7 @@ public class CsvCompanyProvider implements CompanyProvider {
             Double weightFactor = null;
             Double expressFactor = null;
             Integer baseDayTime = null;
+            Integer expressDiscountDays = null;
 
             for(Row row : data){
                 String parameter = row.getString("parametro");
@@ -62,16 +63,19 @@ public class CsvCompanyProvider implements CompanyProvider {
                     case "prazo_base_dias":
                         baseDayTime = (int) value;
                         break;
+                    case "desconto_expresso_dias":
+                        expressDiscountDays = (int) value;
+                        break;
                     default:
                     break;
                 }   
             }
 
-            if(distanceFactor == null || weightFactor == null || expressFactor == null || baseDayTime == null) {
+            if(distanceFactor == null || weightFactor == null || expressFactor == null || baseDayTime == null || expressDiscountDays == null) {
                 return null;
             }
 
-            return new FreightCompany(distanceFactor, weightFactor, expressFactor, baseDayTime);
+            return new FreightCompany(distanceFactor, weightFactor, expressFactor, baseDayTime, expressDiscountDays);
 
         } catch(Exception e){
             System.err.println("O arquivo de configuração da transportadora não está no formato esperado.");

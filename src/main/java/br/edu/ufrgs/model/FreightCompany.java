@@ -4,16 +4,19 @@ import java.time.LocalDate;
 
 public class FreightCompany {
     private static final int DAILY_DISTANCE_CAPACITY = 200;
+    private static final int MIN_DELIVERY_DAYS = 1;
     private Double distanceFactor;
     private Double weightFactor;
     private Double expressFactor;
     private Integer baseDayTime;
+    private Integer expressDiscountDays;
 
-    public FreightCompany(Double distanceFactor, Double weightFactor, Double expressFactor, int baseDayTime) {
+    public FreightCompany(Double distanceFactor, Double weightFactor, Double expressFactor, int baseDayTime, int expressDiscountDays) {
         this.distanceFactor = distanceFactor;
         this.weightFactor = weightFactor;
         this.expressFactor = expressFactor;
         this.baseDayTime = baseDayTime;
+        this.expressDiscountDays = expressDiscountDays;
     }
 
     public Freight calculateFreight(Order order) {
@@ -40,6 +43,10 @@ public class FreightCompany {
 
     private int calculateDeliveryTime(Order order) {
         Double deliveryTime = baseDayTime + order.getDistance()/DAILY_DISTANCE_CAPACITY;
+
+        if(order.getServiceType().equals("EXPRESSO")){
+            return (int) Math.ceil(Math.max(MIN_DELIVERY_DAYS, (deliveryTime - expressDiscountDays)));
+        }
         return (int) Math.ceil(deliveryTime);
     }
 
@@ -73,5 +80,9 @@ public class FreightCompany {
 
     public Integer getBaseDayTime() {
         return baseDayTime;
+    }
+
+    public Integer getExpressDiscountDays(){
+        return expressDiscountDays;
     }
 }
