@@ -368,7 +368,7 @@
                                                                                         <td class="px-4 py-2">
                                                                                                 0.8</td>
                                                                                         <td class="px-4 py-2">
-                                                                                                EXPRESS</td>
+                                                                                                EXPRESSO</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                         <td
