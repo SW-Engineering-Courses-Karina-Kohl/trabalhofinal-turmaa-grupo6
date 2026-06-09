@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -30,10 +32,15 @@ class CsvCompanyProviderTest {
 
     @ParameterizedTest
     @MethodSource("corruptedCasesProvider")
-    void shouldReturnNullWhenCsvHasInvalidData(List<String> lines) {
-        CsvCompanyProvider provider = new CsvCompanyProvider(lines);
-        FreightCompany company = provider.getCompany();
-        assertNull(company);
+    void shouldRejectInvalidCsvData(List<String> lines) {
+
+        CsvCompanyProvider provider =
+            new CsvCompanyProvider(lines);
+
+        assertThrows(
+            IllegalArgumentException.class,
+            provider::getCompany
+        );
     }
 
     // 2. ERROR SCENARIOS: EMPTY FILES / MISSING PROPERTIES
@@ -47,10 +54,15 @@ class CsvCompanyProviderTest {
 
     @ParameterizedTest
     @MethodSource("emptyCasesProvider")
-    void shouldReturnNullWhenCsvIsEmptyOrMissingProperties(List<String> lines) {
-        CsvCompanyProvider provider = new CsvCompanyProvider(lines);
-        FreightCompany company = provider.getCompany();
-        assertNull(company);
+    void shouldRejectEmptyOrIncompleteCsv(List<String> lines) {
+
+        CsvCompanyProvider provider =
+            new CsvCompanyProvider(lines);
+
+        assertThrows(
+            IllegalArgumentException.class,
+            provider::getCompany
+        );
     }
 
     // 3. SUCCESS SCENARIOS: VALID CSV FILES

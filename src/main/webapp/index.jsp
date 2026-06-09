@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+String errorMessage =
+    (String) request.getAttribute("errorMessage");
+%>
 <!DOCTYPE html>
-<html class="light" lang="en" style="">
+<html class="light" lang="pt-BR">
 
 <head>
         <meta charset="utf-8">
@@ -138,16 +142,6 @@
                                 <span class="text-lg font-black text-[#00113a] dark:text-white font-manrope">Atlas
                                         Frete</span>
                         </div>
-                        <div class="flex items-center gap-4">
-                                <button
-                                        class="p-2 text-slate-500 dark:text-slate-400 hover:text-[#005db6] dark:hover:text-blue-300 transition-all opacity-90 hover:opacity-100">
-
-                                </button>
-                                <button
-                                        class="p-2 text-slate-500 dark:text-slate-400 hover:text-[#005db6] dark:hover:text-blue-300 transition-all opacity-90 hover:opacity-100">
-
-                                </button>
-                        </div>
                 </header>
                 <!-- Main Content Area -->
                 <main class="flex-1 p-8 lg:p-12 max-w-7xl mx-auto w-full mt-16">
@@ -170,6 +164,27 @@
                                         </div>
                                 </div>
                         </div>
+                        <% if (errorMessage != null) { %>
+
+                        <div
+                                class="mb-8 p-4 rounded-lg border border-error-container bg-error-container/10 flex items-start justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                                <div class="flex gap-3">
+                                <span class="material-symbols-outlined text-error"
+                                        style="font-variation-settings: 'FILL' 1">warning</span>
+                                <div class="flex flex-col">
+                                        <h4 class="text-sm font-bold text-error font-manrope uppercase tracking-wider">Erro de
+                                        Processamento</h4>
+                                        <p class="text-sm text-on-error-container font-body mt-1"><%= errorMessage %></p>
+                                </div>
+                                </div>
+                                <!--
+                                <button class="text-on-error-container hover:text-error transition-colors p-1">
+                                <span class="material-symbols-outlined text-lg">close</span>
+                                </button>
+                                -->
+                        </div>
+
+                        <% } %>
                         <form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
                         <!-- Bento-style Upload Zones -->
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
@@ -410,8 +425,7 @@
                                         <p class="text-on-primary-container text-sm mb-8 max-w-lg">Clique abaixo
                                                 para executar o motor de cálculo com base nos arquivos enviados.
                                         </p>
-                                        <button type="submit" class="bg-white text-primary px-12 py-5 rounded-md font-manrope text-lg font-extrabold tracking-tight shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 w-fit mb-8"
-                                                href="{{DATA:SCREEN:SCREEN_18}}">
+                                        <button type="submit" class="bg-white text-primary px-12 py-5 rounded-md font-manrope text-lg font-extrabold tracking-tight shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 w-fit mb-8">
                                                 Calcular Fretes
                                                 <span class="material-symbols-outlined">analytics</span>
                                         </button>

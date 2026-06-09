@@ -40,33 +40,63 @@ public class ServletUpload extends HttpServlet {
         List<String> companyLines = readLines(companyFile);
         List<String> orderLines = readLines(orderFile);
 
-        CompanyProvider companyProvider =
-                new CsvCompanyProvider(companyLines);
+        try {
 
-        OrderProvider orderProvider =
-                new CsvOrderProvider(orderLines);
+                CompanyProvider companyProvider =
+                        new CsvCompanyProvider(companyLines);
 
-        FreightCompany company =
-                companyProvider.getCompany();
+                OrderProvider orderProvider =
+                        new CsvOrderProvider(orderLines);
 
-        List<Order> orders =
-                orderProvider.getOrders();
+                FreightCompany company =
+                        companyProvider.getCompany();
 
-        FreightProcessor processor =
-                new FreightProcessor(orderProvider, companyProvider);
+                List<Order> orders =
+                        orderProvider.getOrders();
 
-        List<Freight> freights =
-                processor.freightProcess();
+                FreightProcessor processor = 
+                        new FreightProcessor(orderProvider, companyProvider);
 
-        HttpSession session = request.getSession();
+                List<Freight> freights =
+                        processor.freightProcess();
 
-        session.setAttribute("company", company);
-        session.setAttribute("orders", orders);
-        session.setAttribute("freights", freights);
+                HttpSession session = request.getSession();
 
-        response.sendRedirect(
-                request.getContextPath() + "/results"
-        );
+                session.setAttribute("company", company);
+                session.setAttribute("orders", orders);
+                session.setAttribute("freights", freights);
+
+                response.sendRedirect(
+                        request.getContextPath() + "/results"
+                );
+
+        } catch (IllegalArgumentException e) {
+
+                request.setAttribute(
+                        "errorMessage",
+                        e.getMessage()
+                );
+
+                request.getRequestDispatcher(
+                        "/index.jsp"
+                ).forward(request, response);
+
+                return;
+        } catch (Exception e) {
+
+                e.printStackTrace();
+
+                request.setAttribute(
+                        "errorMessage",
+                        "Erro interno do sistema."
+                );
+
+                request.getRequestDispatcher(
+                        "/index.jsp"
+                ).forward(request, response);
+
+                return;
+        }
     }
 
     private List<String> readLines(Part file)
