@@ -87,7 +87,8 @@ class FreightProcessorTest {
                 0.05,
                 2.10,
                 1.5,
-                2
+                2,
+                0
             );
 
         List<Order> orders = List.of(
@@ -135,7 +136,8 @@ class FreightProcessorTest {
                 0.05,
                 2.10,
                 1.5,
-                2
+                2,
+                0
             );
 
         CompanyProvider companyProvider =
@@ -164,7 +166,8 @@ class FreightProcessorTest {
                 1.0,
                 1.0,
                 1.0,
-                1
+                1,
+                0
             );
 
         List<Order> orders = List.of(
