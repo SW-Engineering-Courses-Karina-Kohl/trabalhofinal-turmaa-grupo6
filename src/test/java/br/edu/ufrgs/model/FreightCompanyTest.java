@@ -11,7 +11,7 @@ class FreightCompanyTest {
     @Test
     void shouldAssignHighPriority() {
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -32,7 +32,7 @@ class FreightCompanyTest {
     @Test
     void shouldAssignNormalPriority() {
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -53,7 +53,7 @@ class FreightCompanyTest {
     @Test
     void shouldAssignLongDistancePriority() {
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -74,7 +74,7 @@ class FreightCompanyTest {
     @Test
     void shouldAssignUrgentPriorityAtBoundary() {
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -95,7 +95,7 @@ class FreightCompanyTest {
     @Test
     void shouldAssignNormalPriorityAtBoundary() {
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -116,7 +116,7 @@ class FreightCompanyTest {
     @Test
     void shouldAssignLongDistancePriorityAboveBoundary() {
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -138,7 +138,7 @@ class FreightCompanyTest {
     void shouldCalculateDeliveryDate() {
 
         FreightCompany company =
-            new FreightCompany(1.0, 1.0, 1.0, 1);
+            new FreightCompany(1.0, 1.0, 1.0, 1, 0);
 
         Order order =
             new Order(
@@ -160,12 +160,7 @@ class FreightCompanyTest {
     void shouldCalculateExpressPrice() {
 
         FreightCompany company =
-            new FreightCompany(
-                2.0,
-                3.0,
-                1.5,
-                1
-            );
+            new FreightCompany(2.0, 3.0, 1.5, 1, 0);
 
         Order order =
             new Order(
@@ -186,12 +181,7 @@ class FreightCompanyTest {
     void shouldCalculateNormalPrice() {
 
         FreightCompany company =
-            new FreightCompany(
-                2.0,
-                3.0,
-                1.5,
-                1
-            );
+            new FreightCompany(2.0, 3.0, 1.5, 1, 0);
 
         Order order =
             new Order(
@@ -212,7 +202,7 @@ class FreightCompanyTest {
     @Test
     void shouldApplyExpressFactor() {
         FreightCompany company =
-            new FreightCompany(0.05, 2.10, 1.5, 2);
+            new FreightCompany(0.05, 2.10, 1.5, 2, 0);
 
         Order order =
             new Order(
@@ -228,5 +218,82 @@ class FreightCompanyTest {
 
         // (120.0 * 0.05) + (0.8 * 2.10) = 6.00 + 1.68 = 7.68 * 1.5 = 11.52
         assertEquals(11.52, freight.getFreightValue());
+    }
+
+    @Test
+    void shouldApplyExpressDiscountDays() {
+        FreightCompany company =
+            new FreightCompany(1.0, 1.0, 1.0, 3, 2);
+
+        Order order =
+            new Order(
+                1,
+                "Cliente",
+                200.0,
+                10.0,
+                "EXPRESSO",
+                LocalDate.of(2025, 6, 1)
+            );
+
+        Freight freight = company.calculateFreight(order);
+
+        // 3 + (200 / 200) = 4.0 -> 4 - 2 = 2 -> Delivery Date: 2025-06-03
+        assertEquals(LocalDate.of(2025, 6, 3), freight.getEstimatedDate());
+    }
+
+    @Test
+    void shouldRespectMinDeliveryDays() {
+        FreightCompany company =
+            new FreightCompany(1.0, 1.0, 1.0, 1, 10);
+
+        Order order =
+            new Order(
+                1,
+                "Cliente",
+                100.0,
+                10.0,
+                "EXPRESSO",
+                LocalDate.of(2025, 6, 1)
+            );
+
+        Freight freight = company.calculateFreight(order);
+
+        // 1 + (100 / 200) = 1.5 -> ceil = 2 -> 2 - 10 = -8 -> MIN = 1 -> Delivery Date: 2025-06-02
+        assertEquals(LocalDate.of(2025, 6, 2), freight.getEstimatedDate());
+    }
+
+    @Test
+    void shouldNotApplyExpressDiscountDays() {
+        FreightCompany company =
+            new FreightCompany(1.0, 1.0, 1.0, 1, 5);
+
+        Order orderNormal =
+            new Order(
+                1,
+                "Cliente",
+                600.0,
+                10.0,
+                "NORMAL",
+                LocalDate.of(2025, 6, 1)
+            );
+
+        Order orderExpresso =
+            new Order(
+                2,
+                "Cliente",
+                600.0,
+                10.0,
+                "EXPRESSO",
+                LocalDate.of(2025, 6, 1)
+            );
+
+        Freight freightNormal = company.calculateFreight(orderNormal);
+        Freight freightExpresso = company.calculateFreight(orderExpresso);
+
+        // 1 + (600 / 200) = 4.0 -> NORMAL sem desconto = 4 dias
+        assertEquals(LocalDate.of(2025, 6, 5), freightNormal.getEstimatedDate());
+
+        // 1 + (600 / 200) = 4.0 -> EXPRESSO com desconto 5 -> MAX(1, -1) = 1 dia
+        assertEquals(LocalDate.of(2025, 6, 2), freightExpresso.getEstimatedDate());
     }
 }
