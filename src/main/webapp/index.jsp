@@ -104,10 +104,11 @@ String errorMessage =
 </head>
 
 <body class="bg-surface text-on-surface">
-        <!-- SideNavBar -->
-        <aside
-                class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-[#f1f4f6] dark:bg-slate-900 z-50 overflow-y-auto p-6">
-                <div class="flex items-center gap-3 mb-10">
+        <div class="min-h-screen flex flex-col">
+                <!-- TopNavBar -->
+                <header
+                        class="w-full bg-[#F7FAFB]/80 dark:bg-slate-950/80 backdrop-blur-xl fixed top-0 h-16 z-40 px-8 lg:p-12 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
                         <div
                                 class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
                                 <span class="material-symbols-outlined">local_shipping</span>
@@ -117,31 +118,10 @@ String errorMessage =
                                         class="text-xl font-extrabold text-[#00113a] dark:text-white uppercase tracking-widest leading-tight">
                                         Atlas Frete</h2>
                                 <p
-                                        class="text-[10px] font-manrope tracking-widest uppercase font-semibold text-slate-500">
+                                        class="text-[10px] tracking-widest uppercase font-semibold text-slate-500">
                                         Plataforma de Gestão Logística</p>
                         </div>
                 </div>
-                <nav class="space-y-2">
-                        <a class="flex items-center gap-3 px-4 py-3 bg-[#ffffff] dark:bg-slate-800 text-[#00113a] dark:text-blue-400 font-bold rounded-lg shadow-sm font-manrope text-sm tracking-tight transition-all scale-98 active:opacity-80"
-                                href="#">
-                                <span class="material-symbols-outlined">upload_file</span>
-                                Upload de Arquivos
-                        </a>
-                        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 font-manrope text-sm tracking-tight transition-colors duration-200 rounded-lg"
-                                href="${pageContext.request.contextPath}/results">
-                                <span class="material-symbols-outlined">analytics</span>
-                                Resumo da Exportação
-                        </a>
-                </nav>
-        </aside>
-        <div class="md:ml-64 min-h-screen flex flex-col">
-                <!-- TopNavBar -->
-                <header
-                        class="bg-[#f7fafc]/80 dark:bg-slate-950/80 backdrop-blur-xl fixed top-0 right-0 left-64 h-16 z-40 px-8 flex justify-between items-center">
-                        <div class="flex items-center gap-8">
-                                <span class="text-lg font-black text-[#00113a] dark:text-white font-manrope">Atlas
-                                        Frete</span>
-                        </div>
                 </header>
                 <!-- Main Content Area -->
                 <main class="flex-1 p-8 lg:p-12 max-w-7xl mx-auto w-full mt-16">

@@ -130,10 +130,12 @@ int totalPedidos = (freights != null) ? freights.size() : 0;
     </head>
 
     <body class="bg-surface text-on-surface">
-        <!-- SideNavBar -->
-        <aside
-            class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-[#f1f4f6] dark:bg-slate-900 z-50 overflow-y-auto p-6">
-            <div class="flex items-center gap-3 mb-10">
+        <!-- Main Canvas -->
+        <main class="min-h-screen">
+            <!-- TopTitle-->
+            <header
+                class="w-full bg-[#F7FAFB]/80 dark:bg-slate-950/80 backdrop-blur-xl fixed top-0 h-16 z-40 px-8 lg:p-12 flex justify-between items-center">
+                <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
                     <span class="material-symbols-outlined">local_shipping</span>
                 </div>
@@ -141,40 +143,10 @@ int totalPedidos = (freights != null) ? freights.size() : 0;
                     <h2
                         class="text-xl font-extrabold text-[#00113a] dark:text-white uppercase tracking-widest leading-tight">
                         Atlas Frete</h2>
-                    <p class="text-[10px] font-manrope tracking-widest uppercase font-semibold text-slate-500">
+                    <p class="text-[10px] tracking-widest uppercase font-semibold text-slate-500">
                         Plataforma de Gestão Logística</p>
                 </div>
             </div>
-            <nav class="space-y-2">
-                <a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 font-manrope text-sm tracking-tight transition-colors duration-200 rounded-lg"
-                    href="${pageContext.request.contextPath}/index.jsp">
-                    <span class="material-symbols-outlined">upload_file</span>
-                    Upload de Arquivos
-                </a>
-                <a class="flex items-center gap-3 px-4 py-3 bg-[#ffffff] dark:bg-slate-800 text-[#00113a] dark:text-blue-400 font-bold rounded-lg shadow-sm font-manrope text-sm tracking-tight transition-all scale-98 active:opacity-80"
-                    href="${pageContext.request.contextPath}/results">
-                    <span class="material-symbols-outlined">analytics</span>
-                    Resumo da Exportação
-                </a>
-            </nav>
-        </aside>
-        <!-- Main Canvas -->
-        <main class="pl-64 min-h-screen">
-            <!-- TopNavBar Shell -->
-            <header
-                class="fixed top-0 right-0 left-64 h-16 bg-[#f7fafc]/80 dark:bg-slate-950/80 backdrop-blur-xl z-40 flex justify-between items-center px-8 w-full font-['Manrope'] font-semibold">
-                <div class="flex items-center">
-                    <span class="text-lg font-black text-[#00113a] dark:text-white">Atlas Frete</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button class="p-2 rounded-full hover:bg-slate-100/50 transition-colors">
-                        <span class="material-symbols-outlined text-slate-500"
-                            data-icon="notifications">notifications</span>
-                    </button>
-                    <button class="p-2 rounded-full hover:bg-slate-100/50 transition-colors">
-                        <span class="material-symbols-outlined text-slate-500" data-icon="settings">settings</span>
-                    </button>
-                </div>
             </header>
             <!-- Content Body -->
             <div class="pt-24 pb-10 px-10 max-w-7xl mx-auto space-y-10">
