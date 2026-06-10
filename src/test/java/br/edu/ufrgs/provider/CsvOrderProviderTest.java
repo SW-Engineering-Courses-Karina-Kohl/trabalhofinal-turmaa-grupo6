@@ -3,6 +3,7 @@ package br.edu.ufrgs.provider;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -102,8 +103,11 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
-        }
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                        );
+                }
 
         @Test
         void shouldRejectInvalidPrefix() {
@@ -115,7 +119,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                        );
         }
 
         @Test
@@ -128,8 +135,11 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
-        }
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                        );
+                }
 
         @Test
         void shouldRejectNegativeDistance() {
@@ -141,7 +151,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -154,7 +167,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -167,7 +183,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -180,7 +199,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -193,7 +215,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -245,7 +270,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -274,7 +302,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -287,7 +318,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -300,7 +334,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -313,7 +350,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -326,7 +366,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
         @Test
@@ -339,7 +382,10 @@ class CsvOrderProviderTest {
 
                 CsvOrderProvider provider = new CsvOrderProvider(csv);
 
-                assertNull(provider.getOrders());
+                assertThrows(
+                        IllegalArgumentException.class,
+                        provider::getOrders
+                );
         }
 
 

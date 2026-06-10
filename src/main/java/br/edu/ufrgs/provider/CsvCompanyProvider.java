@@ -23,7 +23,9 @@ public class CsvCompanyProvider implements CompanyProvider {
     public FreightCompany getCompany(){
         try{
             if(csvLines == null || csvLines.isEmpty()) {
-                return null;
+                throw new IllegalArgumentException(
+                    "Arquivo de configuração vazio."
+                );
             }
 
             CsvReadOptions options = CsvReadOptions.builder(new StringReader(String.join("\n", csvLines)))
@@ -31,9 +33,16 @@ public class CsvCompanyProvider implements CompanyProvider {
                     .build();
             Table data = Table.read().csv(options);
 
+            if (!data.columnNames().contains("parametro") || !data.columnNames().contains("valor")) {
+                throw new IllegalArgumentException(
+                    "O arquivo deve conter as colunas parametro e valor."
+                );
+            }
 
             if(data.rowCount() < REQUIRED_PARAMETERS){
-                return null;
+                throw new IllegalArgumentException(
+                    "Arquivo de configuração incompleto."
+                );
             }
 
             Double distanceFactor = null;
@@ -47,7 +56,10 @@ public class CsvCompanyProvider implements CompanyProvider {
                 double value = Double.parseDouble(String.valueOf(row.getObject("valor")));
 
                 if (value < 0){
-                    return null;
+                    throw new IllegalArgumentException(
+                        "Valor negativo encontrado no parâmetro: "
+                    + parameter
+                    );
                 }
 
                 switch (parameter) {
@@ -70,16 +82,46 @@ public class CsvCompanyProvider implements CompanyProvider {
                     break;
                 }   
             }
-
-            if(distanceFactor == null || weightFactor == null || expressFactor == null || baseDayTime == null || expressDiscountDays == null) {
-                return null;
+            
+            if (distanceFactor == null) {
+                throw new IllegalArgumentException(
+                    "Parâmetro fator_distancia_km não encontrado."
+                );
+            }
+            if (weightFactor == null) {
+                throw new IllegalArgumentException(
+                    "Parâmetro fator_peso_kg não encontrado."
+                );
+            }
+            if (expressFactor == null) {
+                throw new IllegalArgumentException(
+                    "Parâmetro multiplicador_expresso não encontrado."
+                );
+            }
+            if (baseDayTime == null) {
+                throw new IllegalArgumentException(
+                    "Parâmetro prazo_base_dias não encontrado."
+                );
+            }
+            if (expressDiscountDays == null) {
+                throw new IllegalArgumentException(
+                    "Parâmetro desconto_expresso_dias não encontrado."
+                );
             }
 
             return new FreightCompany(distanceFactor, weightFactor, expressFactor, baseDayTime, expressDiscountDays);
 
-        } catch(Exception e){
-            System.err.println("O arquivo de configuração da transportadora não está no formato esperado.");
-            return null;
+        } catch (IllegalArgumentException e) {
+
+             throw e;
+
+        } catch (Exception e) {
+
+            throw new IllegalArgumentException(
+                "Arquivo de configuração inválido: "
+                + e.getMessage(),
+                e
+            );
         }
     }
 }
