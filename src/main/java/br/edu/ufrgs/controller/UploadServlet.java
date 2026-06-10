@@ -26,7 +26,7 @@ import br.edu.ufrgs.services.FreightProcessor;
 
 @WebServlet("/upload")
 @MultipartConfig
-public class ServletUpload extends HttpServlet {
+public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(
