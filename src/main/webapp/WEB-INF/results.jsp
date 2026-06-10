@@ -196,14 +196,16 @@ int totalPedidos = (freights != null) ? freights.size() : 0;
                             </div>
                             <div>
                                 <h2 class="text-2xl font-bold text-primary">Pronto para Exportação</h2>
-                                <p class="text-on-surface-variant">O documento <strong>relatorio_final_v1.xlsx</strong>
+                                <p class="text-on-surface-variant">O documento <strong>logistica_finalizada.csv</strong>
                                     foi consolidado e está pronto para o seu ledger.</p>
                             </div>
-                            <button
+                            <form action="${pageContext.request.contextPath}/download" method="get">
+                            <button type="submit"
                                 class="w-full max-w-md bg-primary hover:bg-primary-container text-white px-8 py-5 rounded-lg font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary/10 transition-all active:scale-[0.98]">
                                 <span class="material-symbols-outlined" data-icon="download">download</span>
-                                Download Arquivo Final (.xlsx)
+                                Download Arquivo Final (.csv)
                             </button>
+                            </form>
                         </div>
                     </div>
                     <!-- Full Results Table -->
