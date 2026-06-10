@@ -155,8 +155,9 @@ String errorMessage =
                                                 <p
                                                         class="text-on-surface-variant text-lg font-body leading-relaxed">
                                                         Inicialize seu motor de cálculo de frete. Faça o upload
-                                                        dos parâmetros operacionais da sua empresa e do backlog
-                                                        de remessas para iniciar o processamento das rotas.</p>
+                                                        dos parâmetros operacionais da sua empresa para iniciar 
+                                                        o processamento do valor. Os dados devem ter os formato 
+                                                        indicado para serem aceitos pelo sistema.</p>
                                         </div>
                                         <div class="hidden xl:block h-32 w-32 opacity-10">
                                                 <span
@@ -189,12 +190,12 @@ String errorMessage =
                         <!-- Bento-style Upload Zones -->
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
                                 <!-- Zone 1: Configuração da Companhia -->
-                                <div class="lg:col-span-5 flex flex-col group">
+                                <div class="lg:col-span-6 flex flex-col group">
                                         <div
-                                                class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/10 transition-all duration-300 flex-1 flex flex-col">
-                                                <div class="flex flex-col h-full">
+                                                class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/10 transition-all duration-300 flex flex-col">
+                                                <div class="flex flex-col">
                                                         <!-- Header Section -->
-                                                        <div class="flex flex-col mb-8 h-[120px]">
+                                                        <div class="flex flex-col mb-8 h-auto">
                                                                 <div
                                                                         class="flex items-center justify-between mb-4">
                                                                         <span
@@ -205,42 +206,46 @@ String errorMessage =
                                                                 <h3
                                                                         class="text-2xl font-bold text-primary font-manrope mb-2">
                                                                         Configuração da Companhia</h3>
+                                                                <p class="text-[10px] text-slate-500 font-medium mb-2 uppercase tracking-wider">Formatos aceitos: .csv</p>
                                                                 <p
-                                                                        class="text-[11px] text-on-surface-variant leading-relaxed">
-                                                                        Inicialize seu motor de cálculo de
-                                                                        frete. Faça o upload dos parâmetros
-                                                                        operacionais da sua empresa e do backlog
-                                                                        de remessas para iniciar o processamento
-                                                                        das rotas.</p>
+                                                                        class="text-[11px] text-on-surface-variant leading-relaxed min-h-[60px]">
+                                                                        O arquivo de configuração deve conter as
+                                                                        informações essenciais do seu negócio.                                                                        </p>
                                                         </div>
                                                         <!-- Upload Area -->
                                                         <div
                                                                 class="mb-8 h-[160px] flex flex-col justify-center">
-                                                                <label
+                                                                <label id="companyConfigLabel"
                                                                         class="cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-outline-variant rounded-lg bg-surface-container-low hover:bg-white hover:border-primary transition-all p-8 group/upload h-full">
-                                                                        <input class="hidden" type="file" name="companyConfig" accept=".csv" required>
-                                                                        <span
-                                                                                class="material-symbols-outlined text-3xl text-outline mb-2 group-hover/upload:text-primary transition-colors">cloud_upload</span>
-                                                                        <span
+                                                                        <input class="hidden" type="file" id="companyConfig" name="companyConfig" accept=".csv" required>
+                                                                        <div class="relative mb-2">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-3xl text-outline mb-2 group-hover/upload:text-primary transition-colors">cloud_upload</span>
+                                                                                <div
+                                                                                        class="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary rounded-full flex items-center justify-center">
+                                                                                        <span id="companyIcon"
+                                                                                                class="material-symbols-outlined text-[8px] text-white">add</span>
+                                                                                </div>
+                                                                        </div>
+                                                                        <span id="companyText"
                                                                                 class="text-xs font-semibold text-primary">Clique
                                                                                 para enviar configurações</span>
                                                                 </label>
                                                         </div>
                                                         <!-- Preview Table Section -->
                                                         <div
-                                                                class="overflow-hidden border border-outline-variant rounded-lg mt-auto">
-                                                                <div
-                                                                        class="bg-surface-container-low px-4 py-2 border-b border-outline-variant text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
-                                                                        estrutura do arquivo de configuração
-                                                                </div>
+                                                                class="overflow-x-auto border border-outline-variant rounded-lg">
                                                                 <table
                                                                         class="w-full text-left text-xs font-body">
+                                                                        <caption class="caption-top bg-surface-container-low px-4 py-2 border-b border-outline-variant text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
+                                                                                estrutura do arquivo de configuração
+                                                                        </caption>
                                                                         <thead
                                                                                 class="bg-surface-container px-4">
                                                                                 <tr>
                                                                                         <th
                                                                                                 class="px-4 py-2 font-bold text-primary">
-                                                                                                parâmetro</th>
+                                                                                                parametro</th>
                                                                                         <th
                                                                                                 class="px-4 py-2 font-bold text-primary">
                                                                                                 valor</th>
@@ -251,29 +256,46 @@ String errorMessage =
                                                                                 <tr>
                                                                                         <td
                                                                                                 class="px-4 py-2 text-on-surface-variant">
-                                                                                                distace_factor
-                                                                                        </td>
+                                                                                                fator_distancia_km                                                                                        </td>
                                                                                         <td
-                                                                                                class="px-4 py-2 font-mono">
+                                                                                                class="px-4 py-2 text-primary font-mono">
                                                                                                 0.05</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                         <td
                                                                                                 class="px-4 py-2 text-on-surface-variant">
-                                                                                                weight_factor
+                                                                                                fator_peso_kg
                                                                                         </td>
                                                                                         <td
-                                                                                                class="px-4 py-2 font-mono">
+                                                                                                class="px-4 py-2 text-primary font-mono">
                                                                                                 2.10</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                         <td
                                                                                                 class="px-4 py-2 text-on-surface-variant">
-                                                                                                express_factor
+                                                                                                multiplicador_expresso
                                                                                         </td>
                                                                                         <td
-                                                                                                class="px-4 py-2 font-mono">
+                                                                                                class="px-4 py-2 text-primary font-mono">
                                                                                                 1.5</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td
+                                                                                                class="px-4 py-2 text-on-surface-variant">
+                                                                                                prazo_base_dias
+                                                                                        </td>
+                                                                                        <td
+                                                                                                class="px-4 py-2 text-primary font-mono">
+                                                                                                1</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td
+                                                                                                class="px-4 py-2 text-on-surface-variant">
+                                                                                                desconto_expresso_dias
+                                                                                        </td>
+                                                                                        <td
+                                                                                                class="px-4 py-2 text-primary font-mono">
+                                                                                                2</td>
                                                                                 </tr>
                                                                         </tbody>
                                                                 </table>
@@ -282,16 +304,12 @@ String errorMessage =
                                         </div>
                                 </div>
                                 <!-- Zone 2: Lista de Pedidos -->
-                                <div class="lg:col-span-7 flex flex-col group">
+                                <div class="lg:col-span-6 flex flex-col group">
                                         <div
-                                                class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/10 transition-all duration-300 flex-1 flex flex-col relative">
-                                                <!-- Decorative background texture -->
-                                                <div
-                                                        class="absolute -right-12 -top-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none">
-                                                </div>
-                                                <div class="relative z-10 flex flex-col h-full">
+                                                class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/10 transition-all duration-300 flex flex-col relative">
+                                                <div class="relative z-10 flex flex-col">
                                                         <!-- Header Section -->
-                                                        <div class="flex flex-col mb-8 h-[120px]">
+                                                        <div class="flex flex-col mb-8 h-auto">
                                                                 <div
                                                                         class="flex items-center justify-between mb-4">
                                                                         <span
@@ -302,59 +320,66 @@ String errorMessage =
                                                                 <h3
                                                                         class="text-2xl font-bold text-primary font-manrope mb-2">
                                                                         Lista de Pedidos</h3>
+                                                                <p class="text-[10px] text-slate-500 font-medium mb-2 uppercase tracking-wider">Formatos aceitos: .csv</p>
                                                                 <p
-                                                                        class="text-[11px] text-on-surface-variant leading-relaxed">
-                                                                        Inicialize seu motor de cálculo de
-                                                                        frete. Faça o upload dos parâmetros
-                                                                        operacionais da sua empresa e do backlog
-                                                                        de remessas para iniciar o processamento
-                                                                        das rotas.</p>
+                                                                        class="text-[11px] text-on-surface-variant leading-relaxed min-h-[60px]">
+                                                                        Esse arquivo deve conter os dados dos
+                                                                        pedidos para calculo do frete.
+                                                                        Os dados devem estar atualizados 
+                                                                        e que pedido_id tenha o prefixo "ORD-"</p>
                                                         </div>
                                                         <!-- Upload Area -->
                                                         <div
                                                                 class="mb-8 h-[160px] flex flex-col justify-center">
-                                                                <label
+                                                                <label id="orderLabel"
                                                                         class="cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-outline-variant rounded-lg bg-surface-container-low hover:bg-white hover:border-secondary transition-all py-8 group/upload h-full">
-                                                                        <input class="hidden" type="file" name="orderList" accept=".csv" required>
+                                                                        <input class="hidden" type="file" id="orderList" name="orderList" accept=".csv" required>
                                                                         <div class="relative mb-2">
                                                                                 <span
                                                                                         class="material-symbols-outlined text-3xl text-outline group-hover/upload:text-secondary transition-colors">upload_file</span>
                                                                                 <div
                                                                                         class="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary rounded-full flex items-center justify-center">
-                                                                                        <span
+                                                                                        <span id="orderIcon"
                                                                                                 class="material-symbols-outlined text-[8px] text-white">add</span>
                                                                                 </div>
                                                                         </div>
-                                                                        <span
-                                                                                class="text-xs font-semibold text-primary">Enviar
+                                                                        <span   id="orderText"
+                                                                                class="text-xs font-semibold text-primary">Clique para enviar
                                                                                 lista de pedidos</span>
                                                                 </label>
                                                         </div>
                                                         <!-- Preview Table Section -->
                                                         <div
-                                                                class="overflow-x-auto border border-outline-variant rounded-lg mt-auto">
-                                                                <div
-                                                                        class="bg-surface-container-low px-4 py-2 border-b border-outline-variant text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
-                                                                        estrutura da lista de pedidos</div>
-                                                                <table
+                                                                class="flex overflow-x-auto border border-outline-variant rounded-lg
+                                                                        [&::-webkit-scrollbar]:h-2
+                                                                        [&::-webkit-scrollbar-track]:bg-surface-container-low
+                                                                        [&::-webkit-scrollbar-thumb]:bg-outline
+                                                                        [&::-webkit-scrollbar-thumb]:rounded-none">
+                                                                <table 
                                                                         class="w-full text-left text-[11px] font-body min-w-[500px]">
+                                                                        <caption 
+                                                                                class="caption-top bg-surface-container-low px-4 py-2 border-b border-outline-variant text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
+                                                                                estrutura da lista de pedidos</caption>
                                                                         <thead class="bg-surface-container">
                                                                                 <tr>
                                                                                         <th
-                                                                                                class="px-4 py-2 font-bold text-primary">
-                                                                                                order_id</th>
+                                                                                                class="px-4 py-2 font-bold text-[12px] text-primary">
+                                                                                                pedido_id</th>
                                                                                         <th
-                                                                                                class="px-4 py-2 font-bold text-primary">
+                                                                                                class="px-4 py-2 font-bold text-[12px]   text-primary whitespace-nowrap min-w-[70px]">
                                                                                                 cliente</th>
                                                                                         <th
-                                                                                                class="px-4 py-2 font-bold text-primary">
-                                                                                                distância</th>
+                                                                                                class="px-4 py-2 font-bold text-[12px] text-primary">
+                                                                                                distancia_km</th>
                                                                                         <th
-                                                                                                class="px-4 py-2 font-bold text-primary">
-                                                                                                peso</th>
+                                                                                                class="px-4 py-2 font-bold text-[12px] text-primary">
+                                                                                                peso_kg</th>
                                                                                         <th
-                                                                                                class="px-4 py-2 font-bold text-primary">
-                                                                                                serviço</th>
+                                                                                                class="px-4 py-2 font-bold text-[12px] text-primary">
+                                                                                                tipo_servico</th>
+                                                                                        <th
+                                                                                                class="px-4 py-2 font-bold text-[12px] text-primary">
+                                                                                                data_pedido</th>
                                                                                 </tr>
                                                                         </thead>
                                                                         <tbody
@@ -363,7 +388,7 @@ String errorMessage =
                                                                                         <td
                                                                                                 class="px-4 py-2 text-primary font-mono">
                                                                                                 ORD-001</td>
-                                                                                        <td class="px-4 py-2">
+                                                                                        <td class="px-4 py-2 whitespace-nowrap min-w-[70px]">
                                                                                                 Loja Tech</td>
                                                                                         <td class="px-4 py-2">
                                                                                                 450.0</td>
@@ -371,12 +396,14 @@ String errorMessage =
                                                                                                 2.5</td>
                                                                                         <td class="px-4 py-2">
                                                                                                 NORMAL</td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                2024-06-15</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                         <td
                                                                                                 class="px-4 py-2 text-primary font-mono">
                                                                                                 ORD-002</td>
-                                                                                        <td class="px-4 py-2">
+                                                                                        <td class="px-4 py-2 whitespace-nowrap min-w-[70px]">
                                                                                                 Maria Silva</td>
                                                                                         <td class="px-4 py-2">
                                                                                                 120.0</td>
@@ -384,20 +411,40 @@ String errorMessage =
                                                                                                 0.8</td>
                                                                                         <td class="px-4 py-2">
                                                                                                 EXPRESSO</td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                2025-12-31</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td
+                                                                                                class="px-4 py-2 text-primary font-mono ">
+                                                                                                ORD-003</td>
+                                                                                        <td class="px-4 py-2 whitespace-nowrap min-w-[70px]">
+                                                                                                Construtora XYZ
+                                                                                        </td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                1700.0</td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                50.0</td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                SEDEX</td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                2026-06-9</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                         <td
                                                                                                 class="px-4 py-2 text-primary font-mono">
-                                                                                                ORD-003</td>
-                                                                                        <td class="px-4 py-2">
-                                                                                                Construtora XYZ
+                                                                                                ORD-004</td>
+                                                                                        <td class="px-4 py-2 whitespace-nowrap min-w-[70px]">
+                                                                                                Papelaria ABC
                                                                                         </td>
                                                                                         <td class="px-4 py-2">
                                                                                                 1200.0</td>
                                                                                         <td class="px-4 py-2">
-                                                                                                50.0</td>
+                                                                                                37.0</td>
                                                                                         <td class="px-4 py-2">
                                                                                                 NORMAL</td>
+                                                                                        <td class="px-4 py-2">
+                                                                                                2026-06-10</td>
                                                                                 </tr>
                                                                         </tbody>
                                                                 </table>
@@ -454,7 +501,36 @@ String errorMessage =
 
 
 
-
+<script>
+    document.getElementById('companyConfig').addEventListener('change', function(event) {
+    // Verifica se o usuário realmente selecionou um arquivo
+    if (this.files && this.files.length > 0) {
+                
+                // Altera o texto para o nome do arquivo carregado
+                document.getElementById('companyText').innerText = `Arquivo de configuração carregado`;
+                
+                // Muda o ícone de 'add' para 'check'
+                document.getElementById('companyIcon').innerText = 'check';
+                
+                // Muda a cor da bolinha do ícone para verde 
+                document.getElementById('companyIcon').parentElement.classList.replace('bg-secondary', 'bg-green-600');
+        }
+  });
+    document.getElementById('orderList').addEventListener('change', function(event) {
+    // Verifica se o usuário realmente selecionou um arquivo
+    if (this.files && this.files.length > 0) {
+                
+                // Altera o texto para o nome do arquivo carregado
+                document.getElementById('orderText').innerText = `Arquivo de lista de pedidos carregado`;
+                
+                // Muda o ícone de 'add' para 'check'
+                document.getElementById('orderIcon').innerText = 'check';
+                
+                // Muda a cor da bolinha do ícone para verde 
+                document.getElementById('orderIcon').parentElement.classList.replace('bg-secondary', 'bg-green-600');
+        }
+    });
+</script>
 </body>
 
 </html>

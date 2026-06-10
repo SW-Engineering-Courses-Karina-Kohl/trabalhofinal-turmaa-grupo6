@@ -9,6 +9,14 @@
 NumberFormat currency =
         NumberFormat.getCurrencyInstance(
                 new Locale("pt", "BR"));
+
+java.text.DecimalFormat integerFormat = new java.text.DecimalFormat("000");
+%>
+<%
+List<Freight> freights =
+    (List<Freight>) request.getAttribute("freights");
+
+int totalPedidos = (freights != null) ? freights.size() : 0; 
 %>
 
     <!DOCTYPE html>
@@ -199,21 +207,8 @@ NumberFormat currency =
                             </div>
                             <h3 class="text-white/70 font-label uppercase tracking-widest text-xs font-bold mb-2">Total
                                 Processado</h3>
-                            <div class="text-6xl font-black text-white tracking-tighter">124</div>
+                            <div class="text-6xl font-black text-white tracking-tighter"><%= totalPedidos %></div>
                             <p class="text-on-primary-container font-medium mt-1">pedidos processados</p>
-                        </div>
-                        <div class="relative z-10 mt-8">
-                            <div class="flex items-center gap-4 text-white/80 text-sm">
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-white">0.4s</span>
-                                    <span class="text-[10px] uppercase opacity-60">Latência</span>
-                                </div>
-                                <div class="w-px h-6 bg-white/20"></div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-white">100%</span>
-                                    <span class="text-[10px] uppercase opacity-60">Precisão</span>
-                                </div>
-                            </div>
                         </div>
                         <!-- Abstract Background Shape -->
                         <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
@@ -251,14 +246,14 @@ NumberFormat currency =
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
+                            <table class="w-full text-left text-[11px] border-collapse">
                                 <thead>
                                     <tr class="bg-surface-container-low/50">
-                                        <th class="px-8 py-4 text-[10px] uppercase tracking-widest font-bold text-slate-500"
+                                        <th class="px-8 py-4 text-[12px] uppercase tracking-widest font-bold text-slate-500"
                                             style="width: 25%;">ID Pedido</th>
-                                        <th class="px-8 py-4 text-[10px] uppercase tracking-widest font-bold text-slate-500"
+                                        <th class="px-8 py-4 text-[12px] uppercase tracking-widest font-bold text-slate-500"
                                             style="width: 25%;">Valor Frete</th>
-                                        <th class="px-8 py-4 text-[10px] uppercase tracking-widest font-bold text-slate-500"
+                                        <th class="px-8 py-4 text-[12px] uppercase tracking-widest font-bold text-slate-500"
                                             style="width: 25%;">
                                             <div class="flex items-center gap-1 cursor-pointer text-secondary justify-center">
                                                 Data Estimada
@@ -266,17 +261,14 @@ NumberFormat currency =
                                                     data-icon="expand_more">expand_more</span>
                                             </div>
                                         </th>
-                                        <th class="px-8 py-4 text-[10px] uppercase tracking-widest font-bold text-slate-500 text-center"
+                                        <th class="px-8 py-4 text-[12px] uppercase tracking-widest font-bold text-slate-500 text-center"
                                             style="width: 25%;">Status</th>
                                     </tr>
                                 </thead>
 
                                 
 
-                                <%
-                                List<Freight> freights =
-                                    (List<Freight>) request.getAttribute("freights");
-                                %>
+                                
                                 <tbody class="divide-y-0">
                                     <% for (Freight freight : freights) { %>
 
@@ -313,7 +305,7 @@ NumberFormat currency =
                                         <tr class="group hover:bg-surface-container-low/50 transition-colors">
 
                                             <td class="px-8 py-6 font-mono text-xs font-semibold text-slate-600">
-                                                #ORD-<%= freight.getOrderId() %>
+                                                #ORD-<%= integerFormat.format(freight.getOrderId()) %>
                                             </td>
 
                                             <td class="px-8 py-6 font-bold text-blue-900">
