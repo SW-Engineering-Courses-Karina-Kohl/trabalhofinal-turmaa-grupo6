@@ -12,6 +12,7 @@ import br.edu.ufrgs.model.Freight;
 import br.edu.ufrgs.model.Priority;
 import br.edu.ufrgs.model.FreightCompany;
 import br.edu.ufrgs.model.Order;
+import br.edu.ufrgs.model.ServiceType;
 import br.edu.ufrgs.provider.CompanyProvider;
 import br.edu.ufrgs.provider.OrderProvider;
 
@@ -97,7 +98,7 @@ class FreightProcessorTest {
                 "Cliente A",
                 100.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             ),
             new Order(
@@ -105,7 +106,7 @@ class FreightProcessorTest {
                 "Cliente B",
                 200.0,
                 5.0,
-                "EXPRESSO",
+                ServiceType.EXPRESSO,
                 LocalDate.of(2025, 6, 1)
             )
         );
@@ -176,7 +177,7 @@ class FreightProcessorTest {
                 "Cliente",
                 1500.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             ),
             new Order(
@@ -184,7 +185,7 @@ class FreightProcessorTest {
                 "Cliente",
                 100.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             )
         );

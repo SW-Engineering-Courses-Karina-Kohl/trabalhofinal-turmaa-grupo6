@@ -7,10 +7,10 @@ public class Order {
     private String client;
     private Double distance;
     private Double weight;
-    private String serviceType;
+    private ServiceType serviceType;
     private LocalDate serviceDate;
 
-    public Order(int orderId, String client, Double distance, Double weight, String serviceType, LocalDate serviceDate) {
+    public Order(int orderId, String client, Double distance, Double weight, ServiceType serviceType, LocalDate serviceDate) {
         this.orderId = orderId;
         this.client = client;
         this.distance = distance;
@@ -31,7 +31,7 @@ public class Order {
     public Double getWeight() {
         return weight;
     }
-    public String getServiceType() {
+    public ServiceType getServiceType() {
         return serviceType;
     }
     public LocalDate getServiceDate() {

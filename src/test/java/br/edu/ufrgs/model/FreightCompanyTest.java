@@ -19,7 +19,7 @@ class FreightCompanyTest {
                 "Cliente",
                 100.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -40,7 +40,7 @@ class FreightCompanyTest {
                 "Cliente",
                 300.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -61,7 +61,7 @@ class FreightCompanyTest {
                 "Cliente",
                 1500.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -82,7 +82,7 @@ class FreightCompanyTest {
                 "Cliente",
                 200.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -103,7 +103,7 @@ class FreightCompanyTest {
                 "Cliente",
                 1200.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -124,7 +124,7 @@ class FreightCompanyTest {
                 "Cliente",
                 1400.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -146,7 +146,7 @@ class FreightCompanyTest {
                 "Cliente",
                 300.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -168,7 +168,7 @@ class FreightCompanyTest {
                 "Cliente",
                 100.0,
                 10.0,
-                "EXPRESSO",
+                ServiceType.EXPRESSO,
                 LocalDate.now()
             );
 
@@ -189,7 +189,7 @@ class FreightCompanyTest {
                 "Cliente",
                 100.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.now()
             );
 
@@ -210,7 +210,7 @@ class FreightCompanyTest {
                 "Cliente",
                 120.0,
                 0.8,
-                "EXPRESSO",
+                ServiceType.EXPRESSO,
                 LocalDate.of(2026, 3, 23)
             );
 
@@ -231,7 +231,7 @@ class FreightCompanyTest {
                 "Cliente",
                 200.0,
                 10.0,
-                "EXPRESSO",
+                ServiceType.EXPRESSO,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -252,7 +252,7 @@ class FreightCompanyTest {
                 "Cliente",
                 100.0,
                 10.0,
-                "EXPRESSO",
+                ServiceType.EXPRESSO,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -273,7 +273,7 @@ class FreightCompanyTest {
                 "Cliente",
                 600.0,
                 10.0,
-                "NORMAL",
+                ServiceType.NORMAL,
                 LocalDate.of(2025, 6, 1)
             );
 
@@ -283,7 +283,7 @@ class FreightCompanyTest {
                 "Cliente",
                 600.0,
                 10.0,
-                "EXPRESSO",
+                ServiceType.EXPRESSO,
                 LocalDate.of(2025, 6, 1)
             );
 

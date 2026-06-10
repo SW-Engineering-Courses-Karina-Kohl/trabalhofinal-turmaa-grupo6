@@ -34,7 +34,7 @@ public class FreightCompany {
         Double basePrice = (order.getDistance() * distanceFactor)
                         + (order.getWeight() * weightFactor);
 
-        if(order.getServiceType().equals("EXPRESSO")) {
+        if(order.getServiceType() == ServiceType.EXPRESSO) {
             return basePrice * expressFactor;
         }
 
@@ -44,7 +44,7 @@ public class FreightCompany {
     private int calculateDeliveryTime(Order order) {
         Double deliveryTime = baseDayTime + order.getDistance()/DAILY_DISTANCE_CAPACITY;
 
-        if(order.getServiceType().equals("EXPRESSO")){
+        if(order.getServiceType() == ServiceType.EXPRESSO){
             return (int) Math.ceil(Math.max(MIN_DELIVERY_DAYS, (deliveryTime - expressDiscountDays)));
         }
         return (int) Math.ceil(deliveryTime);
