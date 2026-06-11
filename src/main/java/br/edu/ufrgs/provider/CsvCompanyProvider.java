@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import br.edu.ufrgs.model.FreightCompany;
+import br.edu.ufrgs.util.CompanyValidator;
 import tech.tablesaw.api.Row;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;
@@ -55,59 +56,32 @@ public class CsvCompanyProvider implements CompanyProvider {
                 String parameter = row.getString("parametro");
                 double value = Double.parseDouble(String.valueOf(row.getObject("valor")));
 
-                if (value < 0){
-                    throw new IllegalArgumentException(
-                        "Valor negativo encontrado no parâmetro: "
-                    + parameter
-                    );
-                }
-
                 switch (parameter) {
                     case "fator_distancia_km":
-                        distanceFactor = value;
+                        distanceFactor = CompanyValidator.validateFactor(parameter, value);
                         break;
                     case "fator_peso_kg":
-                        weightFactor = value;
+                        weightFactor = CompanyValidator.validateFactor(parameter, value);
                         break;
                     case "multiplicador_expresso":
-                        expressFactor = value;
+                        expressFactor = CompanyValidator.validateFactor(parameter, value);
                         break;
                     case "prazo_base_dias":
-                        baseDayTime = (int) value;
+                        baseDayTime = (int) CompanyValidator.validateFactor(parameter, value);
                         break;
                     case "desconto_expresso_dias":
-                        expressDiscountDays = (int) value;
+                        expressDiscountDays = (int) CompanyValidator.validateFactor(parameter, value);
                         break;
                     default:
                     break;
                 }   
             }
             
-            if (distanceFactor == null) {
-                throw new IllegalArgumentException(
-                    "Parâmetro fator_distancia_km não encontrado."
-                );
-            }
-            if (weightFactor == null) {
-                throw new IllegalArgumentException(
-                    "Parâmetro fator_peso_kg não encontrado."
-                );
-            }
-            if (expressFactor == null) {
-                throw new IllegalArgumentException(
-                    "Parâmetro multiplicador_expresso não encontrado."
-                );
-            }
-            if (baseDayTime == null) {
-                throw new IllegalArgumentException(
-                    "Parâmetro prazo_base_dias não encontrado."
-                );
-            }
-            if (expressDiscountDays == null) {
-                throw new IllegalArgumentException(
-                    "Parâmetro desconto_expresso_dias não encontrado."
-                );
-            }
+        CompanyValidator.validatePresence("fator_distancia_km", distanceFactor);
+        CompanyValidator.validatePresence("fator_peso_kg", weightFactor);
+        CompanyValidator.validatePresence("multiplicador_expresso", expressFactor);
+        CompanyValidator.validatePresence("prazo_base_dias", baseDayTime);
+        CompanyValidator.validatePresence("desconto_expresso_dias", expressDiscountDays);
 
             return new FreightCompany(distanceFactor, weightFactor, expressFactor, baseDayTime, expressDiscountDays);
 
