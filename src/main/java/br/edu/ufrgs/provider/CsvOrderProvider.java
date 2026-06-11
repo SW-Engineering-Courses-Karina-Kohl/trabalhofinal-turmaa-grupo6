@@ -2,6 +2,11 @@ package br.edu.ufrgs.provider;
 
 import br.edu.ufrgs.model.Order;
 import br.edu.ufrgs.model.ServiceType;
+import br.edu.ufrgs.util.ClientValidator;
+import br.edu.ufrgs.util.DateValidator;
+import br.edu.ufrgs.util.DistanceValidator;
+import br.edu.ufrgs.util.OrderIdValidator;
+import br.edu.ufrgs.util.WeightValidator;
 import tech.tablesaw.api.Row;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;
@@ -16,7 +21,6 @@ import java.util.Set;
 public class CsvOrderProvider implements OrderProvider {
 
     private static final int REQUIRED_PARAMETERS = 6;
-    private static final String ORDER_PREFIX = "ORD-";
 
     private List<String> csvLines;
 
@@ -51,22 +55,22 @@ public class CsvOrderProvider implements OrderProvider {
 
             try {
 
-                int orderId = parseOrderId(
+                int orderId = OrderIdValidator.validate(
                         row.getString("pedido_id"),
                         usedIds
                 );
 
-                String client = parseClient(
+                String client = ClientValidator.validate(
                         row.getString("cliente")
                 );
 
-                double distance = parseDistance(
+                double distance = DistanceValidator.validate(
                         String.valueOf(
                                 row.getObject("distancia_km")
                         )
                 );
 
-                double weight = parseWeight(
+                double weight = WeightValidator.validate(
                         String.valueOf(
                                 row.getObject("peso_kg")
                         )
@@ -76,9 +80,15 @@ public class CsvOrderProvider implements OrderProvider {
                     row.getString("tipo_servico")
                 );
 
-                LocalDate orderDate = parseDate(
-                        row.getDate("data_pedido")
-                );
+                LocalDate orderDate;
+                
+                try {
+                    orderDate = DateValidator.validate(row.getDate("data_pedido"));
+
+                } catch (Exception e) {
+
+                    throw new IllegalArgumentException("Data do pedido deve ser uma data válida.");
+                }
 
                 orders.add(
                         new Order(
@@ -128,136 +138,5 @@ public class CsvOrderProvider implements OrderProvider {
                 "Colunas obrigatórias não encontradas."
             );
         }
-    }
-
-    private int parseOrderId(
-        String rawOrderId,
-        Set<Integer> usedIds) {
-
-        if (rawOrderId == null) {
-            throw new IllegalArgumentException(
-                "ID do pedido não informado."
-            );
-        }
-
-        rawOrderId = rawOrderId.trim();
-
-        if (rawOrderId.isEmpty()) {
-            throw new IllegalArgumentException(
-                "ID do pedido vazio."
-            );
-        }
-
-        if (!rawOrderId.startsWith(ORDER_PREFIX)) {
-            throw new IllegalArgumentException(
-                "ID do pedido deve começar com ORD-."
-            );
-        }
-
-        String numericPart = rawOrderId.substring(ORDER_PREFIX.length());
-
-        if (!numericPart.matches("\\d+")) {
-            throw new IllegalArgumentException(
-                "Parte numérica do ID do pedido inválida."
-            );        
-        }
-
-        int orderId = Integer.parseInt(numericPart);
-
-        if (orderId <= 0) {
-            throw new IllegalArgumentException(
-                "ID do pedido deve ser maior que zero."
-            );
-        }
-
-        if (!usedIds.add(orderId)) {
-            throw new IllegalArgumentException(
-                "Pedido duplicado: ORD-" + orderId
-            );
-        }
-
-        return orderId;
-    }
-
-    private String parseClient(String client) {
-
-        if (client == null) {
-            throw new IllegalArgumentException(
-                "Cliente não informado."
-            );
-        }
-
-        client = client.trim();
-
-        if (client.isEmpty()) {
-            throw new IllegalArgumentException(
-                "Nome do cliente vazio."
-            );
-        }
-
-        return client;
-    }
-
-    private double parseDistance(String rawDistance) {
-
-        if (rawDistance == null) {
-            throw new IllegalArgumentException(
-                "Distância não informada."
-            );
-        }
-
-        double distance = Double.parseDouble(rawDistance);
-
-        if (Double.isNaN(distance)
-                || Double.isInfinite(distance)
-                || distance <= 0) {
-
-            throw new IllegalArgumentException(
-                "Distância deve ser maior que zero."
-            );
-        }
-
-        try {
-            distance = Double.parseDouble(rawDistance);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(
-                "Distância inválida."
-            );
-        }
-
-        return distance;
-    }
-
-    private double parseWeight(String rawWeight) {
-
-        if (rawWeight == null) {
-            throw new IllegalArgumentException(
-                "Peso não informado."
-            );
-        }
-
-        double weight = Double.parseDouble(rawWeight);
-
-        if (Double.isNaN(weight)
-                || Double.isInfinite(weight)
-                || weight <= 0) {
-
-            throw new IllegalArgumentException(
-                "Peso deve ser maior que zero."
-            );
-        }
-
-        return weight;
-    }
-
-    private LocalDate parseDate(LocalDate date) {
-
-        if (date == null) {
-            throw new IllegalArgumentException(
-                "Data do pedido não informada."
-            );
-        }
-
-        return date;
     }
 }
