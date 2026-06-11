@@ -1,6 +1,7 @@
 package br.edu.ufrgs.provider;
 
 import br.edu.ufrgs.model.Order;
+import br.edu.ufrgs.model.ServiceType;
 import tech.tablesaw.api.Row;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;
@@ -71,8 +72,8 @@ public class CsvOrderProvider implements OrderProvider {
                         )
                 );
 
-                String serviceType = parseService(
-                        row.getString("tipo_servico")
+                ServiceType serviceType = ServiceType.normalize(
+                    row.getString("tipo_servico")
                 );
 
                 LocalDate orderDate = parseDate(
@@ -247,42 +248,6 @@ public class CsvOrderProvider implements OrderProvider {
         }
 
         return weight;
-    }
-
-    private String parseService(String serviceType) {
-
-        if (serviceType == null) {
-            throw new IllegalArgumentException(
-                "Tipo de serviço não informado."
-            );
-        }
-
-        serviceType = serviceType.trim();
-
-        if (serviceType.isEmpty()) {
-            throw new IllegalArgumentException(
-                "Tipo de serviço vazio."
-            );
-        }
-
-        String normalized = serviceType.toUpperCase();
-
-        switch (normalized) {
-
-            case "NORMAL":
-                return "NORMAL";
-
-            case "EXPRESSO":
-                return "EXPRESSO";
-
-            case "SEDEX":
-                return "EXPRESSO";
-
-            default:
-                throw new IllegalArgumentException(
-                    "Tipo de serviço inválido: " + serviceType
-                );
-        }
     }
 
     private LocalDate parseDate(LocalDate date) {

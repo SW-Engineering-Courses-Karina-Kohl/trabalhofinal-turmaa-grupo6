@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import br.edu.ufrgs.model.Order;
+import br.edu.ufrgs.model.ServiceType;
 
 class CsvOrderProviderTest {
 
@@ -36,7 +37,7 @@ class CsvOrderProviderTest {
                 assertEquals("Loja Tech", order.getClient());
                 assertEquals(450.0, order.getDistance());
                 assertEquals(2.5, order.getWeight());
-                assertEquals("NORMAL", order.getServiceType());
+                assertEquals(ServiceType.NORMAL, order.getServiceType());
         }
 
         @Test
@@ -72,7 +73,7 @@ class CsvOrderProviderTest {
 
                 assertNotNull(orders);
 
-                assertEquals("EXPRESSO",orders.get(0).getServiceType());
+                assertEquals(ServiceType.EXPRESSO,orders.get(0).getServiceType());
         }
 
         @Test
@@ -89,7 +90,7 @@ class CsvOrderProviderTest {
 
                 assertNotNull(orders);
 
-                assertEquals("NORMAL",orders.get(0).getServiceType());
+                assertEquals(ServiceType.NORMAL,orders.get(0).getServiceType());
         }
 
         @Test
@@ -235,7 +236,7 @@ class CsvOrderProviderTest {
 
                 assertNotNull(orders);
 
-                assertEquals("EXPRESSO",orders.get(0).getServiceType());
+                assertEquals(ServiceType.EXPRESSO,orders.get(0).getServiceType());
         }
 
         @Test
