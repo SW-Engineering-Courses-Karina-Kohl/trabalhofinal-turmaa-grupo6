@@ -99,8 +99,6 @@ Servlets responsible for:
 
 Additional service and infrastructure layers are used to separate responsibilities and improve maintainability.
 
-Detailed architecture documentation, UML diagrams, and business rules can be found in the project Wiki.
-
 ---
 
 ## Running the Application
@@ -168,7 +166,6 @@ Additional documentation is available in the GitHub Wiki:
 * Architecture
 * UML Diagram
 * Business Rules
-* Execution Guide
 
 ---
 
