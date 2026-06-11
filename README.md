@@ -1,135 +1,182 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/RBBavBFg)
+# Atlas Freight
 
-# Calculadora de Frete
+## Overview
 
-## Visão Geral
-Sistema de cálculo de frete **orientado a dados**, projetado para processar pedidos com base em uma **companhia de frete configurada**.
+Atlas Freight is a Java Web application developed for the Software Development course at the Federal University of Rio Grande do Sul (UFRGS).
 
-## Objetivo
-Receber:
-- Configuração de uma companhia de frete
-- Lista de pedidos pendentes
+The system processes logistics orders and automatically calculates freight costs, estimated delivery dates, and delivery priorities based on configurable business rules.
 
-Retornar:
-- Valor de frete para cada pedido
-- Resultados ordenados por prioridade
-- Com data estimada de entrega
+The application follows a classic Java Web architecture using:
 
-## Modelagem Conceitual
-A modelagem foi estruturada para refletir diretamente o contexto da aplicação e o formato dos dados de entrada.
+* Java Servlets
+* JSP
+* Apache Tomcat
+* Maven
+* Docker
+* CSV-based data processing
 
-### Diagrama de Classes
+---
 
-![Diagrama UML](docs/UML.png)
+## Objective
 
-### Order
-Representa a unidade de entrada do sistema.
+The system receives:
 
-**Responsabilidades:**
-- Armazenar dados relevantes (distância, peso, tipo de serviço, etc.)
-- Servir como base para o cálculo de frete
+* A freight company configuration file
+* A list of pending orders
 
-### Freight Company
-Representa uma estratégia de cálculo aplicada aos pedidos.
+After processing, the application generates:
 
-**Responsabilidades:**
-- Interpretar configurações
-- Aplicar regras específicas de cálculo
-- Definir:
-  - Valor do frete
-  - Prazo de entrega
-  - Restrições operacionais
+* Freight cost calculations
+* Estimated delivery dates
+* Delivery priorities
+* A downloadable CSV report
 
-### Freight
-Representa o resultado do processamento.
+---
 
-**Responsabilidades:**
-- Representar o resultado do cálculo para um pedido
-- Referenciar a companhia responsável pelo cálculo
-- Armazenar:
-  - Valor calculado
-  - Prazo de entrega
-  - Prioridade
+## Main Features
 
-## Fluxo do Sistema
+### Freight Processing
 
-1. Dados são obtidos a partir de fontes externas
-2. Pedidos e a companhia são disponibilizados ao sistema
-3. Um componente de cálculo processa os pedidos:
-   - Aplica a companhia configurada a cada pedido
-   - Gera resultados válidos
-4. Os resultados são organizados:
-   - Por prioridade
-   - Por data de entrega
-5. A resposta é retornada
+Calculates freight costs using configurable factors loaded from external files.
 
-## Padrão Arquitetural
-O projeto segue o padrão **MVC (Model-View-Controller)**, conforme definido na proposta.
+### Delivery Estimation
 
-- **Model**: representa o contexto (`Pedido`, `CompanhiaFrete`, `Frete`)
-- **Controller**: recebe entradas e aciona o processamento
-- **View**: representa os resultados
+Calculates delivery dates according to distance, service type, and company configuration.
 
-## Estrutura do Projeto
+### Priority Classification
 
-```
-src/main/java/br/edu/ufrgs
- ├── model
- │    ├── Order
- │    ├── Freight
- │    └── FreightCompany
- │
- ├── service
- │    └── FreightProcessor
- │
- ├── provider
- │    ├── OrderProvider
- │    └── CompanyProvider
- │
- ├── exporter
- │    └── FreightExporter
- │
- ├── controller
- │    └── (Servlets)
- │
- └── webapp
-      └── webview
+Classifies orders as:
+
+* URGENT
+* NORMAL
+* LONG_DISTANCE
+
+### CSV Import
+
+Allows users to upload:
+
+* Company configuration files
+* Order lists
+
+### CSV Export
+
+Generates a final file:
+
+```text
+logistica_finalizada.csv
 ```
 
-## Abstração de Dados
+containing all processed freight information.
 
-O sistema utiliza interfaces para desacoplar a origem dos dados do processamento:
+---
 
-- `OrderProvider`: fornece pedidos ao sistema
-- `CompanyProvider`: fornece a companhia configurada
-- `FreightProvider`: fornece a lista de fretes ordenada
+## Architecture
 
-Essa abordagem permite flexibilidade na origem dos dados, como arquivos CSV, APIs ou outras fontes externas.
+The project follows the MVC (Model-View-Controller) pattern:
 
-## Regras de Negócio
+### Model
 
-- Cada companhia define seus próprios parâmetros de cálculo
-- Um pedido pode gerar uma opção de frete, dependendo das restrições da companhia
-- Uma companhia só gera resultado se atender às restrições do pedido
-- Os resultados são ordenados por:
-  1. Prioridade
-  2. Data de entrega
+Represents the business domain:
 
-## Entrada de Dados
+* Order
+* Freight
+* FreightCompany
+* Priority
 
-O sistema trabalha com dados estruturados, como:
+### View
 
-- Configuração de companhia de frete
-- Pedidos pendentes
+JSP pages responsible for presenting information to the user.
 
-Esses dados podem ser fornecidos por diferentes fontes.
+### Controller
 
-## Possíveis Extensões
+Servlets responsible for:
 
-- Suporte a múltiplos formatos de dados
-- Integração com serviços externos
-- Persistência de resultados
+* Receiving uploaded files
+* Triggering freight processing
+* Displaying results
+* Exporting processed data
 
-## Autoria
+Additional service and infrastructure layers are used to separate responsibilities and improve maintainability.
 
-João Victor Prado Trindade, 588129 ; Jorge Antônio Noll, 343372 ; Arthur Farias Zapata, 577298 ; Pedro Henrique Antunes Claudino, 579557.
+Detailed architecture documentation, UML diagrams, and business rules can be found in the project Wiki.
+
+---
+
+## Running the Application
+
+### Prerequisites
+
+* Docker Desktop
+
+Verify installation:
+
+```bash
+docker --version
+```
+
+### Build and Start
+
+From the project root directory:
+
+```bash
+docker compose up --build
+```
+
+### Access
+
+Open your browser and navigate to:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## Input Files
+
+### Company Configuration
+
+Example:
+
+```csv
+parameter,value
+distance_factor,0.05
+weight_factor,2.10
+express_multiplier,1.50
+base_delivery_days,2
+express_discount_days,1
+```
+
+### Orders
+
+Example:
+
+```csv
+order_id,client,distance_km,weight_kg,service_type,order_date
+ORD-001,Store A,450,2.5,NORMAL,2026-06-01
+ORD-002,Store B,120,0.8,EXPRESSO,2026-06-01
+```
+
+---
+
+## Documentation
+
+Additional documentation is available in the GitHub Wiki:
+
+* Project Overview
+* Architecture
+* UML Diagram
+* Business Rules
+* Execution Guide
+
+---
+
+## Authors
+
+* João Victor Prado Trindade (588129)
+* Jorge Antônio Noll (343372)
+* Arthur Farias Zapata (577298)
+* Pedro Henrique Antunes Claudino (579557)
+
+Federal University of Rio Grande do Sul (UFRGS)
