@@ -1,12 +1,11 @@
 package br.edu.ufrgs.provider;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 import br.edu.ufrgs.model.Order;
@@ -38,6 +37,17 @@ class CsvOrderProviderTest {
                 assertEquals(450.0, order.getDistance());
                 assertEquals(2.5, order.getWeight());
                 assertEquals(ServiceType.NORMAL, order.getServiceType());
+        }
+
+        @Test
+        void shouldReturnNullWhenCsvHasOnlyHeadersAndNoData() {
+                List<String> csv = List.of(
+                        "pedido_id,cliente,distancia_km,peso_kg,tipo_servico,data_pedido"
+                );
+
+                CsvOrderProvider provider = new CsvOrderProvider(csv);
+
+                assertNull(provider.getOrders());
         }
 
         @Test
@@ -388,6 +398,32 @@ class CsvOrderProviderTest {
                         provider::getOrders
                 );
         }
+        @Test
+        void shouldRejectWhenAnyRequiredColumnIsMissing() {
 
+                List<String> invalidHeaders = List.of(
+                        "errado,cliente,distancia_km,peso_kg,tipo_servico,data_pedido",
+                        "pedido_id,errado,distancia_km,peso_kg,tipo_servico,data_pedido",
+                        "pedido_id,cliente,errado,peso_kg,tipo_servico,data_pedido",
+                        "pedido_id,cliente,distancia_km,errado,tipo_servico,data_pedido",
+                        "pedido_id,cliente,distancia_km,peso_kg,errado,data_pedido",
+                        "pedido_id,cliente,distancia_km,peso_kg,tipo_servico,errado"
+                );
+
+                for (String header : invalidHeaders) {
+                        List<String> csv = List.of(
+                                header,
+                                "ORD-1,Loja Tech,450.0,2.5,NORMAL,2026-03-23"
+                        );
+
+                        CsvOrderProvider provider = new CsvOrderProvider(csv);
+
+                        assertThrows(
+                                IllegalArgumentException.class,
+                                provider::getOrders,
+                                "Falhou ao rejeitar a ausência de coluna no cabeçalho: " + header
+                        );
+                }
+        }
 
 }
