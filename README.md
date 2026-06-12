@@ -7,14 +7,17 @@ Atlas Freight is a Java Web application developed for the Software Development c
 
 The system processes logistics orders and automatically calculates freight costs, estimated delivery dates, and delivery priorities based on configurable business rules.
 
-The application follows a classic Java Web architecture using:
+The application is built using:
 
-* Java Servlets
+* Java 17
+* Jakarta Servlet
 * JSP
-* Apache Tomcat
+* Apache Tomcat 10
 * Maven
 * Docker
-* CSV-based data processing
+* Tablesaw
+* JUnit 5
+* Mockito
 
 ---
 
@@ -73,7 +76,7 @@ containing all processed freight information.
 
 ## Architecture
 
-The project follows the MVC (Model-View-Controller) pattern:
+The project follows the MVC (Model-View-Controller) pattern with additional layers for data access, validation, processing, and export.
 
 ### Model
 
@@ -83,6 +86,7 @@ Represents the business domain:
 * Freight
 * FreightCompany
 * Priority
+* ServiceType
 
 ### View
 
@@ -93,11 +97,41 @@ JSP pages responsible for presenting information to the user.
 Servlets responsible for:
 
 * Receiving uploaded files
-* Triggering freight processing
+* Processing freight calculations
 * Displaying results
 * Exporting processed data
 
-Additional service and infrastructure layers are used to separate responsibilities and improve maintainability.
+### Provider
+
+Responsible for loading data from external sources.
+
+Current implementations:
+
+* CsvCompanyProvider
+* CsvOrderProvider
+
+### Service
+
+Contains the business processing logic.
+
+* FreightProcessor
+
+### Exporter
+
+Responsible for generating output files.
+
+* CsvFreightExporter
+
+### Util
+
+Contains validation and support classes used throughout the application.
+
+* ClientValidator
+* CompanyValidator
+* DateValidator
+* DistanceValidator
+* OrderIdValidator
+* WeightValidator
 
 ---
 
