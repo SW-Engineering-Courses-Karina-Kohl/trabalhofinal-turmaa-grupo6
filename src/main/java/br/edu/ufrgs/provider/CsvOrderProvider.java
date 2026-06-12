@@ -135,7 +135,7 @@ public class CsvOrderProvider implements OrderProvider {
                 || !columns.contains("data_pedido")) {
 
             throw new IllegalArgumentException(
-                "Colunas obrigatórias não encontradas."
+                "Colunas obrigatórias não encontradas em pedidos."
             );
         }
     }

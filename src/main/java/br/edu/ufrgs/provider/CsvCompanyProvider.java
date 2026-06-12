@@ -36,7 +36,7 @@ public class CsvCompanyProvider implements CompanyProvider {
 
             if (!data.columnNames().contains("parametro") || !data.columnNames().contains("valor")) {
                 throw new IllegalArgumentException(
-                    "O arquivo deve conter as colunas parametro e valor."
+                    "O arquivo de configuração deve conter as colunas parametro e valor."
                 );
             }
 
